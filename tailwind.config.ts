@@ -26,9 +26,11 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				astro: {
-					primary: '#6E59A5',
-					accent: '#9b87f5',
-					dark: '#1A1F2C',
+					primary: '#4A80D4',
+					accent: '#7AA5FF',
+					dark: '#0D1B30',
+					light: '#E1EBFF',
+					highlight: '#00C4FF',
 				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
@@ -110,17 +112,38 @@ export default {
 						opacity: "1",
 						transform: "scale(1)"
 					}
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' },
+				},
+				'pulse-fade': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.7' },
+				},
+				'glow': {
+					'0%, 100%': { boxShadow: '0 0 10px 0px rgba(122, 165, 255, 0.4)' },
+					'50%': { boxShadow: '0 0 20px 5px rgba(122, 165, 255, 0.7)' },
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
-				'scale-in': 'scale-in 0.2s ease-out'
+				'scale-in': 'scale-in 0.2s ease-out',
+				'float': 'float 5s ease-in-out infinite',
+				'pulse-fade': 'pulse-fade 3s ease-in-out infinite',
+				'glow': 'glow 3s ease-in-out infinite',
 			},
 			backgroundImage: {
-				'astro-gradient': 'linear-gradient(to right, #1A1F2C, #6E59A5)',
+				'astro-gradient': 'linear-gradient(to right, #0D1B30, #4A80D4)',
+				'astro-glow': 'radial-gradient(circle, rgba(122, 165, 255, 0.3) 0%, rgba(13, 27, 48, 0) 70%)',
 				'hero-pattern': 'url("/images/hero-bg.jpg")',
+			},
+			boxShadow: {
+				'astro': '0 4px 20px -4px rgba(74, 128, 212, 0.5)',
+				'astro-hover': '0 8px 30px -2px rgba(74, 128, 212, 0.6)',
+				'card-glow': '0 0 15px rgba(122, 165, 255, 0.3)',
 			},
 		}
 	},
