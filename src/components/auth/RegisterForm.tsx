@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Eye, EyeOff, Lock, User } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 export interface RegisterFormProps {
   onToggleForm?: () => void;
@@ -18,20 +19,44 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Mock registration - in a real app, connect this to your auth backend
-    setTimeout(() => {
-      if (name && email && password) {
+    try {
+      // Registro com Supabase
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            name: name,
+          },
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      // Verificar se o usuário foi criado com sucesso
+      if (data?.user) {
         toast.success("Conta criada com sucesso! Faça login para continuar.");
         if (onToggleForm) onToggleForm();
-      } else {
-        toast.error("Por favor, preencha todos os campos");
       }
+    } catch (error: any) {
+      console.error("Erro de registro:", error);
+      
+      if (error.message.includes("already registered")) {
+        toast.error("Este email já está registrado");
+      } else if (error.message.includes("password")) {
+        toast.error("A senha deve ter pelo menos 6 caracteres");
+      } else {
+        toast.error(error.message || "Falha ao criar conta");
+      }
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -82,6 +107,7 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
                 onChange={(e) => setPassword(e.target.value)}
                 className="pl-10 pr-10"
                 required
+                minLength={6}
               />
               <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
               <Button

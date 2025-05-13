@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Eye, EyeOff, Lock, User } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 export interface LoginFormProps {
   onToggleForm?: () => void;
@@ -19,22 +20,41 @@ export function LoginForm({ onToggleForm }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Mock authentication - in a real app, connect this to your auth backend
-    setTimeout(() => {
-      if (email && password) {
-        // Simulate login success and store user in local storage for demo
-        localStorage.setItem("astroUser", JSON.stringify({ email }));
+    try {
+      // Autenticação com Supabase
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (data?.user) {
+        // Armazenar sessão no localStorage
+        localStorage.setItem("astroUser", JSON.stringify(data.user));
+        
         toast.success("Login realizado com sucesso!");
         navigate("/dashboard");
-      } else {
-        toast.error("Por favor, preencha todos os campos");
       }
+    } catch (error: any) {
+      console.error("Erro de login:", error);
+      
+      if (error.message === "Invalid login credentials") {
+        toast.error("Email ou senha incorretos");
+      } else if (error.message.includes("Email not confirmed")) {
+        toast.error("Por favor, confirme seu email antes de fazer login");
+      } else {
+        toast.error(error.message || "Falha ao fazer login");
+      }
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (

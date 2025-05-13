@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { User, LogOut, Home, Box, LifeBuoy, Menu, X } from "lucide-react";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 export function Header() {
   const navigate = useNavigate();
@@ -27,10 +28,24 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   
-  const handleLogout = () => {
-    localStorage.removeItem("astroUser");
-    toast.success("Logout realizado com sucesso!");
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      // Logout com Supabase
+      const { error } = await supabase.auth.signOut();
+      
+      if (error) {
+        throw error;
+      }
+      
+      // Limpar dados do usuário no localStorage
+      localStorage.removeItem("astroUser");
+      
+      toast.success("Logout realizado com sucesso!");
+      navigate("/");
+    } catch (error: any) {
+      console.error("Erro ao fazer logout:", error);
+      toast.error(error.message || "Falha ao fazer logout");
+    }
   };
   
   const toggleMobileMenu = () => {
