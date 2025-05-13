@@ -44,9 +44,7 @@ const Products = () => {
             {/* Ferramentas carrossel section */}
             <div className="mb-16">
               <h2 className="text-2xl font-bold mb-6 text-gradient">Ferramentas de Dropshipping e Espionagem</h2>
-              <div className="tools-section p-6">
-                <ToolsCarousel />
-              </div>
+              <ToolsCarousel />
             </div>
             
             {/* Filter tabs */}
@@ -91,6 +89,6 @@ const Products = () => {
       </footer>
     </div>
   );
-};
+}
 
 export default Products;
