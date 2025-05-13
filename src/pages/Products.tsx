@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/dashboard/Header";
 import { ProductGrid } from "@/components/dashboard/ProductGrid";
 import { Search } from "lucide-react";
+import { ToolsCarousel } from "@/components/dashboard/ToolsCarousel";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -37,6 +38,14 @@ const Products = () => {
                   placeholder="Buscar produtos..." 
                   className="w-full bg-muted/30 border border-border/40 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-astro-primary/20 transition-all"
                 />
+              </div>
+            </div>
+            
+            {/* Ferramentas carrossel section */}
+            <div className="mb-16">
+              <h2 className="text-2xl font-bold mb-6 text-gradient">Ferramentas de Dropshipping e Espionagem</h2>
+              <div className="tools-section p-6">
+                <ToolsCarousel />
               </div>
             </div>
             
