@@ -1,11 +1,38 @@
-/*
-Theme Name: Astro Vault Access
-Theme URI: https://seusite.com
-Author: Seu Nome
-Author URI: https://seusite.com
-Description: Tema sincronizado com projeto Lovable
-Version: 1.0
-License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: astro-vault
-*/
+
+/* Adicionar estilos para animações e cores */
+:root {
+  --astro-primary: #3b82f6;
+  --astro-accent: #60a5fa;
+  --astro-highlight: #93c5fd;
+  --astro-dark: #0f172a;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease forwards;
+}

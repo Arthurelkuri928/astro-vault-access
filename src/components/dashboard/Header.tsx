@@ -69,9 +69,13 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex gap-6 items-center">
           <a href="/dashboard" className="flex items-center space-x-2 relative overflow-hidden group">
-            {/* Logo or brand name */}
+            {/* Logo image instead of text */}
             <div className="absolute -inset-1 rounded-full blur-md bg-astro-highlight/20 group-hover:bg-astro-highlight/30 transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
-            <span className="text-2xl font-bold text-gradient relative">Astro Vault</span>
+            <img 
+              src="https://i.postimg.cc/j2yfmsNV/Chat-GPT-Image-12-de-mai-de-2025-11-05-41.png" 
+              alt="Astro Vault Logo" 
+              className="h-10 w-auto relative"
+            />
           </a>
           
           {/* Desktop Navigation */}
